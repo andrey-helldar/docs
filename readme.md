@@ -1,5 +1,3 @@
-# Laravel Documentation
+## Laravel Documentation
 
-## Contribution Guidelines
-
-If you are submitting documentation for the **current stable release**, submit it to the corresponding branch. For example, documentation for Laravel 5.1 would be submitted to the `5.1` branch. Documentation intended for the next release of Laravel should be submitted to the `master` branch.
+![Laravel Documentation](https://cloud.githubusercontent.com/assets/10347617/21898684/f856a596-d930-11e6-9950-5723213fb81a.jpg)
