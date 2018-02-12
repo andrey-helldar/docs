@@ -498,6 +498,14 @@ The `array_wrap` function wraps the given value in an array. If the given value 
 
     // ['Laravel']
 
+If the given value is null, an empty array will be returned:
+
+    $nothing = null;
+
+    $array = array_wrap($nothing);
+
+    // []
+
 <a name="method-data-fill"></a>
 #### `data_fill()` {#collection-method}
 
@@ -517,7 +525,7 @@ This function also accepts asterisks as wildcards and will fill the target accor
 
     $data = [
         'products' => [
-            ['name' => 'Desk 1' => 'price' => 100],
+            ['name' => 'Desk 1', 'price' => 100],
             ['name' => 'Desk 2'],
         ],
     ];
@@ -527,8 +535,8 @@ This function also accepts asterisks as wildcards and will fill the target accor
     /*
         [
             'products' => [
-                ['name' => 'Desk 1' => 'price' => 100],
-                ['name' => 'Desk 2' => 'price' => 200],
+                ['name' => 'Desk 1', 'price' => 100],
+                ['name' => 'Desk 2', 'price' => 200],
             ],
         ]
     */
@@ -575,8 +583,8 @@ This function also accepts wildcards and will set values on the target according
     /*
         [
             'products' => [
-                ['name' => 'Desk 1' => 'price' => 200],
-                ['name' => 'Desk 2' => 'price' => 200],
+                ['name' => 'Desk 1', 'price' => 200],
+                ['name' => 'Desk 2', 'price' => 200],
             ],
         ]
     */
@@ -696,7 +704,7 @@ The `__` function translates the given translation string or translation key usi
 
     echo __('messages.welcome');
 
-If the specified translation string or key does not exist, the `__` function will simply return the given value. So, using the example above, the `__` function would return `messages.welcome` if that translation key does not exist.
+If the specified translation string or key does not exist, the `__` function will return the given value. So, using the example above, the `__` function would return `messages.welcome` if that translation key does not exist.
 
 <a name="method-camel-case"></a>
 #### `camel_case()` {#collection-method}
@@ -793,7 +801,7 @@ The `str_before` function returns everything before the given value in a string:
 <a name="method-str-contains"></a>
 #### `str_contains()` {#collection-method}
 
-The `str_contains` function determines if the given string contains the given value:
+The `str_contains` function determines if the given string contains the given value (case sensitive):
 
     $contains = str_contains('This is my name', 'my');
 
@@ -965,7 +973,7 @@ The `trans` function translates the given translation key using your [localizati
 
     echo trans('messages.welcome');
 
-If the specified translation key does not exist, the `trans` function will simply return the given key. So, using the example above, the `trans` function would return `messages.welcome` if the translation key does not exist.
+If the specified translation key does not exist, the `trans` function will return the given key. So, using the example above, the `trans` function would return `messages.welcome` if the translation key does not exist.
 
 <a name="method-trans-choice"></a>
 #### `trans_choice()` {#collection-method}
@@ -974,7 +982,7 @@ The `trans_choice` function translates the given translation key with inflection
 
     echo trans_choice('messages.notifications', $unreadCount);
 
-If the specified translation key does not exist, the `trans_choice` function will simply return the given key. So, using the example above, the `trans_choice` function would return `messages.notifications` if the translation key does not exist.
+If the specified translation key does not exist, the `trans_choice` function will return the given key. So, using the example above, the `trans_choice` function would return `messages.notifications` if the translation key does not exist.
 
 <a name="urls"></a>
 ## URLs
@@ -1155,7 +1163,7 @@ You may add items to the cache by passing an array of key / value pairs to the f
 
     cache(['key' => 'value'], 5);
 
-    cache(['key' => 'value'], Carbon::now()->addSeconds(10));
+    cache(['key' => 'value'], now()->addSeconds(10));
 
 <a name="method-class-uses-recursive"></a>
 #### `class_uses_recursive()` {#collection-method}
@@ -1265,6 +1273,8 @@ The `env` function retrieves the value of an [environment variable](/docs/{{vers
     // Returns 'production' if APP_ENV is not set...
     $env = env('APP_ENV', 'production');
 
+> {note} If you execute the `config:cache` command during your deployment process, you should be sure that you are only calling the `env` function from within your configuration files. Once the configuration has been cached, the `.env` file will not be loaded and all calls to the `env` function will return `null`.
+
 <a name="method-event"></a>
 #### `event()` {#collection-method}
 
@@ -1353,7 +1363,7 @@ The `old` function [retrieves](/docs/{{version}}/requests#retrieving-input) an [
 <a name="method-optional"></a>
 #### `optional()` {#collection-method}
 
-The `optional` function accepts any argument and allows you to access properties or call methods on that object. If the given object is `null`, properties and methods will simply return `null` instead of causing an error:
+The `optional` function accepts any argument and allows you to access properties or call methods on that object. If the given object is `null`, properties and methods will return `null` instead of causing an error:
 
     return optional($user->address)->street;
 
@@ -1391,7 +1401,7 @@ The `request` function returns the current [request](/docs/{{version}}/requests)
 
     $request = request();
 
-    $value = request('key', $default = null);
+    $value = request('key', $default);
 
 <a name="method-rescue"></a>
 #### `rescue()` {#collection-method}
@@ -1565,7 +1575,7 @@ The `view` function retrieves a [view](/docs/{{version}}/views) instance:
 <a name="method-with"></a>
 #### `with()` {#collection-method}
 
-The `with` function returns the value it is given. If a `Closure` is passed as the second argument to the function, the `Closure` will be executed its result will be returned:
+The `with` function returns the value it is given. If a `Closure` is passed as the second argument to the function, the `Closure` will be executed and its result will be returned:
 
     $callback = function ($value) {
         return (is_numeric($value)) ? $value * 2 : 0;

@@ -45,6 +45,12 @@ Laravel 5.5 requires version `~6.0` of Swift Mailer.
 
 ### Artisan
 
+#### Auto-Loading Commands
+
+In Laravel 5.5, Artisan can automatically discover commands so that you do not have to manually register them in your kernel. To take advantage of this new feature, you should add the following line to the `commands` method of your  `App\Console\Kernel` class:
+
+    $this->load(__DIR__.'/Commands');
+
 #### The `fire` Method
 
 Any `fire` methods present on your Artisan commands should be renamed to `handle`.
@@ -55,13 +61,15 @@ With recent improvements to PHP op-code caching, the `optimize` Artisan command 
 
 ### Authorization
 
+> {note} When upgrading from Laravel 5.4 to 5.5, all `remember_me` cookies will be rendered invalid and users will be logged out.
+
 #### The `authorizeResource` Controller Method
 
 When passing a multi-word model name to the `authorizeResource` method, the resulting route segment will now be "snake" case, matching the behavior of resource controllers.
 
 #### The `before` Policy Method
 
-The `before` method of a policy class will not be called if the class doesn't contain a method with name matching the name of the ability being checked.
+The `before` method of a policy class will not be called if the class doesn't contain a method matching the name of the ability being checked.
 
 ### Cache
 
@@ -101,7 +109,6 @@ The `getQualifiedRelatedKeyName` method has been renamed to `getQualifiedRelated
 #### BelongsToMany `getQualifiedForeignKeyName`
 
 The `getQualifiedForeignKeyName` method has been renamed to `getQualifiedForeignPivotKeyName`.
-
 
 #### Model `is` Method
 
@@ -148,7 +155,6 @@ When using an alias, the `withCount` method will no longer automatically append 
 However, in Laravel 5.5, the alias will be used exactly as it is given. If you would like to append `_count` to the resulting column, you must specify that suffix when defining the alias:
 
     $users = User::withCount('foo as bar_count')->get();
-
 
 #### Model Methods & Attribute Names
 
@@ -248,13 +254,13 @@ The unused `$data` and `$callback` arguments were removed from the `Illuminate\C
 
 #### The `dispatch` Helper
 
-If you would like to dispatch a job that runs immediately and returns a value from the `handle` method, you should use the `dispatch_now` or `Bus::dispatch` method to dispatch the job:
+If you would like to dispatch a job that runs immediately and returns a value from the `handle` method, you should use the `dispatch_now` or `Bus::dispatchNow` method to dispatch the job:
 
     use Illuminate\Support\Facades\Bus;
 
     $value = dispatch_now(new Job);
 
-    $value = Bus::dispatch(new Job);
+    $value = Bus::dispatchNow(new Job);
 
 ### Requests
 

@@ -50,7 +50,6 @@ The only remaining step is to install Laravel Mix. Within a fresh installation o
 
     npm install
 
-
 <a name="running-mix"></a>
 ## Running Mix
 
@@ -195,7 +194,7 @@ Though disabled by default, source maps may be activated by calling the `mix.sou
 <a name="working-with-scripts"></a>
 ## Working With JavaScript
 
-Mix provides several features to help you work with your JavaScript files, such as compiling ECMAScript 2015, module bundling, minification, and simply concatenating plain JavaScript files. Even better, this all works seamlessly, without requiring an ounce of custom configuration:
+Mix provides several features to help you work with your JavaScript files, such as compiling ECMAScript 2015, module bundling, minification, and concatenating plain JavaScript files. Even better, this all works seamlessly, without requiring an ounce of custom configuration:
 
     mix.js('resources/assets/js/app.js', 'public/js');
 
@@ -314,13 +313,13 @@ Because versioned files are usually unnecessary in development, you may instruct
 
 [BrowserSync](https://browsersync.io/) can automatically monitor your files for changes, and inject your changes into the browser without requiring a manual refresh. You may enable support by calling the `mix.browserSync()` method:
 
-    mix.browserSync('my-domain.dev');
+    mix.browserSync('my-domain.test');
 
     // Or...
 
     // https://browsersync.io/docs/options
     mix.browserSync({
-        proxy: 'my-domain.dev'
+        proxy: 'my-domain.test'
     });
 
 You may pass either a string (proxy) or object (BrowserSync settings) to this method. Next, start Webpack's dev server using the `npm run watch` command. Now, when you modify a script or PHP file, watch as the browser instantly refreshes the page to reflect your changes.

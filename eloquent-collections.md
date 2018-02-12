@@ -19,7 +19,7 @@ Of course, all collections also serve as iterators, allowing you to loop over th
 
 However, collections are much more powerful than arrays and expose a variety of map / reduce operations that may be chained using an intuitive interface. For example, let's remove all inactive models and gather the first name for each remaining user:
 
-    $users = App\User::where('active', 1)->get();
+    $users = App\User::all();
 
     $names = $users->reject(function ($user) {
         return $user->active === false;
@@ -98,7 +98,7 @@ All Eloquent collections extend the base [Laravel collection](/docs/{{version}}/
 [mode](/docs/{{version}}/collections#method-mode)
 [nth](/docs/{{version}}/collections#method-nth)
 [only](/docs/{{version}}/collections#method-only)
-[pad](docs/{{version}}/collections#method-pad)
+[pad](/docs/{{version}}/collections#method-pad)
 [partition](/docs/{{version}}/collections#method-partition)
 [pipe](/docs/{{version}}/collections#method-pipe)
 [pluck](/docs/{{version}}/collections#method-pluck)

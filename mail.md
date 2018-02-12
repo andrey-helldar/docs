@@ -417,7 +417,7 @@ This command will publish the Markdown mail components to the `resources/views/v
 
 After exporting the components, the `resources/views/vendor/mail/html/themes` directory will contain a `default.css` file. You may customize the CSS in this file and your styles will automatically be in-lined within the HTML representations of your Markdown mail messages.
 
-> {tip} If you would like to build an entirely new theme for the Markdown components, simply write a new CSS file within the `html/themes` directory and change the `theme` option of your `mail` configuration file.
+> {tip} If you would like to build an entirely new theme for the Markdown components, write a new CSS file within the `html/themes` directory and change the `theme` option of your `mail` configuration file.
 
 <a name="previewing-mailables-in-the-browser"></a>
 ## Previewing Mailables In The Browser
@@ -489,7 +489,7 @@ This method will automatically take care of pushing a job onto the queue so the 
 
 If you wish to delay the delivery of a queued email message, you may use the `later` method. As its first argument, the `later` method accepts a `DateTime` instance indicating when the message should be sent:
 
-    $when = Carbon\Carbon::now()->addMinutes(10);
+    $when = now()->addMinutes(10);
 
     Mail::to($request->user())
         ->cc($moreUsers)

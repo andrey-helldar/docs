@@ -169,7 +169,7 @@ Instead of using `DB::raw`, you may also use the following methods to insert a r
 The `selectRaw` method can be used in place of `select(DB::raw(...))`. This method accepts an optional array of bindings as its second argument:
 
     $orders = DB::table('orders')
-                    ->selectRaw('price * ? as price_with_tax'), [1.0825])
+                    ->selectRaw('price * ? as price_with_tax', [1.0825])
                     ->get();
 
 #### `whereRaw / orWhereRaw`
@@ -272,7 +272,7 @@ For example, here is a query that verifies the value of the "votes" column is eq
 
     $users = DB::table('users')->where('votes', '=', 100)->get();
 
-For convenience, if you simply want to verify that a column is equal to a given value, you may pass the value directly as the second argument to the `where` method:
+For convenience, if you want to verify that a column is equal to a given value, you may pass the value directly as the second argument to the `where` method:
 
     $users = DB::table('users')->where('votes', 100)->get();
 
@@ -351,7 +351,7 @@ The `whereNotNull` method verifies that the column's value is not `NULL`:
                         ->whereNotNull('updated_at')
                         ->get();
 
-**whereDate / whereMonth / whereDay / whereYear**
+**whereDate / whereMonth / whereDay / whereYear / whereTime**
 
 The `whereDate` method may be used to compare a column's value against a date:
 
@@ -375,6 +375,12 @@ The `whereYear` method may be used to compare a column's value against a specifi
 
     $users = DB::table('users')
                     ->whereYear('created_at', '2016')
+                    ->get();
+
+The `whereTime` method may be used to compare a column's value against a specific time:
+
+    $users = DB::table('users')
+                    ->whereTime('created_at', '=', '11:20')
                     ->get();
 
 **whereColumn**
@@ -485,6 +491,13 @@ The `groupBy` and `having` methods may be used to group the query results. The `
                     ->having('account_id', '>', 100)
                     ->get();
 
+You may pass multiple arguments to the `groupBy` method to group by multiple columns:
+
+    $users = DB::table('users')
+                    ->groupBy('first_name', 'status')
+                    ->having('account_id', '>', 100)
+                    ->get();
+
 For more advanced `having` statements, see the [`havingRaw`](#raw-methods) method.
 
 #### skip / take
@@ -513,7 +526,6 @@ Sometimes you may want clauses to apply to a query only when something else is t
                     })
                     ->get();
 
-
 The `when` method only executes the given Closure when the first parameter is `true`. If the first parameter is `false`, the Closure will not be executed.
 
 You may pass another Closure as the third parameter to the `when` method. This Closure will execute if the first parameter evaluates as `false`. To illustrate how this feature may be used, we will use it to configure the default sorting of a query:
@@ -527,7 +539,6 @@ You may pass another Closure as the third parameter to the `when` method. This C
                         return $query->orderBy('name');
                     })
                     ->get();
-
 
 <a name="inserts"></a>
 ## Inserts
@@ -576,7 +587,7 @@ When updating a JSON column, you should use `->` syntax to access the appropriat
 <a name="increment-and-decrement"></a>
 ### Increment & Decrement
 
-The query builder also provides convenient methods for incrementing or decrementing the value of a given column. This is simply a shortcut, providing a more expressive and terse interface compared to manually writing the `update` statement.
+The query builder also provides convenient methods for incrementing or decrementing the value of a given column. This is a shortcut, providing a more expressive and terse interface compared to manually writing the `update` statement.
 
 Both of these methods accept at least one argument: the column to modify. A second argument may optionally be passed to control the amount by which the column should be incremented or decremented:
 
